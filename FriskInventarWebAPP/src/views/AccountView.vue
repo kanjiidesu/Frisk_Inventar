@@ -14,6 +14,10 @@ import { getUser } from '../../api';
 export default {
   async mounted() {
     var user = await getUser()
+    if (user == null) {
+      this.$router.push( { path : "/account-login"})
+      return;
+    }
     this.userName = user.userName
     this.email = user.email
     console.log(user)
@@ -25,8 +29,7 @@ export default {
       userName: "",
       email: "",
     }
-  },
-
+  }
 }
 </script>
 

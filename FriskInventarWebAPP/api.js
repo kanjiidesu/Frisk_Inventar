@@ -25,12 +25,17 @@ export const getUser = async () => {
             console.error("Not logged in")
             return null;
         }
+        console.log(session)
         const response = await axios.get(`${apiURL}api/User/${session.userId}/?sessionId=${session.sessionId}`);
         console.log(response)
+        if (response.data == "" || response.data == null) {
+            console.log(response.data == "")
+            return null;
+        }
         return response.data;
     } catch (error) {
         console.error('Error fetching data from API: ', error);
-        throw error;
+        return null;
     }
     console.log(response);
 };
@@ -64,7 +69,6 @@ export const postUserData = async (UserName, Email, Password) => {
     return response.data;
 };
 
-// this endpoint needs to be created, it is not yet
 export async function loginUser(UserName, Password) {
     const response = await axios({
         method: 'post',
@@ -80,12 +84,21 @@ export async function loginUser(UserName, Password) {
     session = response.data;
     localStorage.setItem("session", JSON.stringify(session))
     return response.data;
-    // try {
-    //     const response = await axios.post('/api/User/login', { userName, password});
-    //     return response.data;
-    // } catch (error) {
-    //     throw error;
-    // }
+};
+
+export async function logoutUser() {    
+    const response = await axios({
+        method: 'post',
+        url: `${apiURL}api/User/logout`,
+        data: {
+            userId: session.userId
+        }
+
+    }).catch(error=>{
+        console.error('Error posting data to API: ', error);
+        return;
+    })
+    
 };
 
 export function getSession() {

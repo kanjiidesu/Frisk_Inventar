@@ -5,10 +5,11 @@
       <nav>
       <ul>
         <li><RouterLink to="/">Home</RouterLink></li>
-        <li><RouterLink to="/fridge">Mit Køleskab</RouterLink></li>
-        <li><RouterLink to="/shopping_list">Inkøbsliste</RouterLink></li>
-        <li v-if="getUser() != null" style="float:right"><RouterLink to="/account">My Account</RouterLink></li>
+        <li v-if="user != null"><RouterLink to="/fridge">Mit Køleskab</RouterLink></li>
+        <li v-if="user != null"><RouterLink to="/shopping_list">Inkøbsliste</RouterLink></li>
+        <li v-if="user != null" style="float:right"><RouterLink to="/account">My Account</RouterLink></li>
         <li v-else style="float:right"><RouterLink to="/account-register">My Account</RouterLink></li>
+        <li v-if="user != null" style="float:right"><a @click="logout()" to="/account-register">Log ud</a></li>
       </ul>
     </nav>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,11 +21,33 @@
   </div>
 </template>
 
-<script setup>
+<script>
 import HomeView from './views/HomeView.vue';
 import { RouterLink, RouterView } from 'vue-router';
 import AccountView from './views/AccountViewRegister.vue';
-import { getUser } from '../api';
+import { getUser, logoutUser } from '../api';
+import { ref } from 'vue';
+
+export default {
+  setup() {
+    var user = ref(null);
+    return {user}
+  },
+  async mounted() {
+    this.check()
+  },
+  methods:  {
+    logout: async function() {
+      await logoutUser();      
+      this.$router.push( { path : "/account-register"})
+      this.user = null;
+    },
+    async check() {
+      this.user = await getUser();
+
+    }
+  }
+}
 </script>
 <style scoped>
 ul {

@@ -18,7 +18,7 @@ export default {
 
   methods: {
     handleButtonClick: async function() {
-      // show the user to the register tab
+      this.$router.push('/account-login');
     }
   }
 }

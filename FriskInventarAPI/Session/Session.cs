@@ -22,7 +22,7 @@ namespace FriskInventarAPI.SessionHandler
         public static string CreateSessionId()
         {
             const int sessionIdLength = 32;
-            const string chars = "123456789.+-/qwertyuiopasdfghjklzxcvbnm";
+            const string chars = "123456789qwertyuiopasdfghjklzxcvbnm";
 
             Random randomGenerator = new Random();
             string sessionId = new string(Enumerable.Repeat(chars, sessionIdLength)

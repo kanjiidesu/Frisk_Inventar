@@ -121,11 +121,24 @@ namespace FriskInventarAPI.Controllers
                 // Incorrect password
                 return Unauthorized();
             }
-            Session session = new(user.UserId);
+            Session session = SessionManager.GetUserSession(user.UserId);
+            if (session == null)
+            {
+                session = new(user.UserId);
+            }
             SessionManager.Add(session);
             // Login successful
             return Ok(session);
         }
+
+        // POST: api/Login
+        [HttpPost("logout")]
+        public async Task<ActionResult> LogOut(UserLogOutRequest logoutRequest)
+        {
+           SessionManager.DropUser(logoutRequest.UserId);
+            return Ok();
+        }
+
 
         // DELETE: api/User/5
         [HttpDelete("{id}")]
