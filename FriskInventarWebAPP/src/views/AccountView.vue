@@ -3,7 +3,8 @@ import { getUser } from '../../api';
 </script>
 <template>
   <div>
-  <h1>Velkommen til Frisk Inventar!</h1>
+  <h1 class="accounttitle">Velkommen til Frisk Inventar!</h1>
+  <p>Dette er din konto side, informationen kan ikke blive rettet.</p>
   <h2>Username</h2>
   <p>{{ userName }}</p>
   <h2>Email</h2>
@@ -34,4 +35,16 @@ export default {
 </script>
 
 <style>
+h1.accounttitle {
+  font-family: Inter;
+  font-size: 50px;
+  color: #D4F1F4;
+  padding-top: 10px;
+  text-align: center;
+}
+h2 {
+  color: #008CBA;
+  padding-top: 40px;
+  text-align: center;
+}
 </style>
