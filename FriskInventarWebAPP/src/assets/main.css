@@ -1,0 +1,38 @@
+@import './base.css';
+
+/* Thsi is for mobile */
+#app {
+  /* max-width: 1280px; */
+  height: 100dvh;
+  background-color: #05445E
+}
+
+a,
+.green {
+  text-decoration: none;
+  color: #D4F1F4;
+  transition: 0.4s;
+  padding: 3px;
+}
+
+@media (hover: hover) {
+  a:hover {
+    background-color: #189AB4;
+  }
+}
+
+/* This is for PC */
+@media (min-width: 1024px) {
+  body {
+    /* display: flex; */
+    place-items: center;
+    background-color: #05445E
+  }
+
+  /* #app {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 0 2rem;
+    margin: 0px 650px 200px;
+  } */
+}

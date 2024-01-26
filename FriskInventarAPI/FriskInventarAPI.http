@@ -1,0 +1,6 @@
+@FriskInventarAPI_HostAddress = http://localhost:5276
+
+GET {{FriskInventarAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
