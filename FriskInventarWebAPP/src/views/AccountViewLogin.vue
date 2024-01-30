@@ -94,6 +94,7 @@ body {
   margin: auto;
 }
 
+/* TODO: might have to change this css, because its causing problems on FridgeView */
 /* Full-width input fields */
 input[type=text], input[type=password], input[type=email] {
   width: 100%;

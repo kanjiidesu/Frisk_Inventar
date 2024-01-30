@@ -41,6 +41,25 @@ namespace FriskInventarAPI.Controllers
             return userFridge;
         }
 
+        // GET: api/UserFridge/5
+        [HttpGet("user/{userId}")]
+        public async Task<ActionResult<List<UserFridge>>> GetUserFridgeByUser(int userId)
+        {
+            // Include is a left join
+            // We use left join to get more information,
+            var userFridges = await _context.UserFridges.Where(userFridge => userFridge.UserId == userId)
+            .Include(userFridge => userFridge.Fridge)
+                .ThenInclude(fridge => fridge.Products)
+            .Include(userFridge => userFridge.User).ToListAsync();
+
+            if (userFridges == null)
+            {
+                return NotFound();
+            }
+
+            return userFridges;
+        }
+
         // PUT: api/UserFridge/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]

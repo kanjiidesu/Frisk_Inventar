@@ -41,16 +41,51 @@ export const getUser = async () => {
 };
 
 export const postFridgeData = async (FridgeName) => {
+    try {
     const response = await axios({
         method: 'post',
         url: `${apiURL}api/Fridge`,
         data: {
             fridgeName: FridgeName
         }
-    }).catch(error=>{
-        console.error('Error posting data to API: ', error);
-    })
+    });
     return response.data;
+    } catch (error) {
+        console.error('Error posting data to API: ', error);
+        return null;
+    }
+};
+
+export const getUserFridgeData = async (userId) => {
+    try {
+        const response = await axios.get(`${apiURL}api/UserFridge/user/${userId}`);
+        console.log(response)
+        if (response.data == "" || response.data == null) {
+            console.log("Not good!: ", response.data == "")
+            return null;
+        }
+        return response.data
+    } catch (error) {
+        console.error('Error getting data: ', error);
+        return null;
+    }
+};
+
+export const postUserFridgeData = async (UserId, FridgeId) => {
+    try {
+        const response = await axios({
+            method: 'post',
+            url: `${apiURL}api/UserFridge`,
+            data: {
+                userId: UserId,
+                fridgeId: FridgeId
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error posting data to API: ', error);
+        return null;
+    }
 };
 
 export const postUserData = async (UserName, Email, Password) => {

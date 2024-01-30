@@ -24,14 +24,16 @@ namespace FriskInventarAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Fridge>>> GetFridges()
         {
-            return await _context.Fridges.ToListAsync();
+            return await _context.Fridges.Include(fridge => fridge.Products).ToListAsync();
         }
 
         // GET: api/Fridge/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Fridge>> GetFridge(int id)
         {
-            var fridge = await _context.Fridges.FindAsync(id);
+            // Include is a left join
+            // We use left join to get more information, for example here we want a list of products and its info
+            Fridge? fridge = await _context.Fridges.Include(fridge => fridge.Products).FirstOrDefaultAsync(fridge => fridge.FridgeId==id);
 
             if (fridge == null)
             {

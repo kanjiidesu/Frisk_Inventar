@@ -13,6 +13,7 @@ import { getUser } from '../../api';
 </template>
 <script>
 export default {
+  // add this code to the other pages, to clear the session
   async mounted() {
     var user = await getUser()
     if (user == null) {
