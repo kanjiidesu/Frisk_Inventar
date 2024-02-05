@@ -61,7 +61,7 @@ export const getUserFridgeData = async (userId) => {
         const response = await axios.get(`${apiURL}api/UserFridge/user/${userId}`);
         console.log(response)
         if (response.data == "" || response.data == null) {
-            console.log("Not good!: ", response.data == "")
+            console.log(response.data == "", " there is no fridge to see")
             return null;
         }
         return response.data

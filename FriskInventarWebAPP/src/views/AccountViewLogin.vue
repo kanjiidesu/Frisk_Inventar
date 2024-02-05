@@ -63,7 +63,7 @@ methods: {
     this.$router.push('/account');
   },
   navigateToRegister: async function() {
-    this.$router.push('/account');
+    this.$router.push('/account-register');
   },
 }
 }
@@ -104,6 +104,7 @@ input[type=text], input[type=password], input[type=email] {
   border: none;
   background: #f1f1f1;
   border-radius: 5px;
+  font-family: Inter;
 }
 
 input[type=text]:focus, input[type=password]:focus {
