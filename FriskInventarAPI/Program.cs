@@ -18,10 +18,11 @@ class Program
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
+        
 
         var app = builder.Build();
 
-        app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyOrigin());
+        app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
@@ -35,6 +36,9 @@ class Program
         app.UseAuthorization();
 
         app.MapControllers();
+
+        // this ip can change day-to-day
+        //app.Urls.Add("https://192.168.1.70:7076");
 
         app.Run();
     }

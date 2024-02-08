@@ -2,6 +2,7 @@
 import axios from 'axios';
 
 const apiURL = "https://localhost:7076/";
+// const apiURL = "https://192.168.1.70:7076/";
 var session = null;
 if (localStorage.getItem("session")) {
     session = JSON.parse(localStorage.getItem("session"))
@@ -55,6 +56,24 @@ export const postFridgeData = async (FridgeName) => {
         return null;
     }
 };
+
+export const postProductData = async (FridgeId, ProductName, ExpiryDate) => {
+    try {
+    const response = await axios({
+        method: 'post',
+        url: `${apiURL}api/Product`,
+        data: {
+            fridgeId: FridgeId,
+            productName: ProductName,
+            expiryDate: ExpiryDate
+        }
+    });
+    return response.data;
+    } catch (error) {
+        console.error('Error posting data to API: ', error);
+        return null
+    }
+}
 
 export const getUserFridgeData = async (userId) => {
     try {
@@ -139,3 +158,20 @@ export async function logoutUser() {
 export function getSession() {
     return session;
 }
+
+export async function deleteProductData(productId) {
+    try {
+        const response = await axios.delete(`${apiURL}api/Product/${productId}`);
+        
+        // Check if the response status is 204 (NoContent)
+        if (response.status === 204) {
+          return true; // Product deleted successfully
+        } else {
+          console.error('Error deleting product:', response.statusText);
+          return false; // Product deletion failed
+        }
+      } catch (error) {
+        console.error('Error deleting product:', error.message);
+        return false; // Product deletion failed
+      }
+  }

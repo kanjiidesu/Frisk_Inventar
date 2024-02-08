@@ -1,6 +1,6 @@
 <script setup>
-import { postFridgeData ,getFridgeData, getUser, postUserFridgeData, getUserFridgeData } from '../../api';
-import moment from 'moment';
+import { postFridgeData ,getFridgeData, getUser, postUserFridgeData, getUserFridgeData, postProductData, deleteProductData } from '../../api';
+
 </script>
 <template>
   <div id="app" class="fridge">
@@ -8,21 +8,23 @@ import moment from 'moment';
     <div v-for="userFridge in userFridges" :key="userFridge">
       <div class="fridge-header">
         <h3 class = "fridgename">{{ userFridge.fridge.fridgeName }}</h3>
-        <!-- TODO: add product button should only be visible for users that have a fridge -->
+        <h3 class = "fridgeId">ID:</h3>
+        <h3 class = "fridgeId">{{ userFridge.fridge.fridgeId }}</h3>
         <button class="toggleAddProduct" @click="toggleAddProduct">Tilføj Product</button>
-        <!-- TODO: Productname, fridgeId(should be taken from the fridge that has been added?), expiryDate(how to?) -->
-        <!-- When add product is clicked, then show 2 inputfields -->
       </div>
       <div class="new-product">
+        <label class="productnamelabel">Køleskab Id</label>
+        <input v-model="fridgeIdInput" type="number" id="fridgeIdInput" placeholder="e.g 1.." required>
         <label class="productnamelabel">Produkt navn</label>
-        <input type="text" id="productNameInput">
+        <input v-model="productNameInput" type="text" id="productNameInput" placeholder="e.g Skinke.." required>
         <label class="expiryDate">Expiry Date</label>
-        <input type="date" id="expiryDateInput">
+        <input v-model="expiryDateInput" type="date" id="expiryDateInput" required>
       </div>
       <div v-for="product in userFridge.fridge.products" :key="product">
         <p class="productname">
           <span class="product-name">{{ product.productName }}</span>
           <span class="expiry-date">{{ product.expiryDate }}</span>
+          <button class="delete-product" @click="deleteProduct(product.productId)">Fjern</button>
         </p>
       </div>
     </div>
@@ -56,13 +58,18 @@ export default {
     return {
       fridgeNameInput: "",
       userFridges: [],
+      productData: [],
       showTextbox: false,
       hasFridge: true,
       fridgeName: "",
       user: undefined,
+      fridgeIdInput: "",
       productNameInput: "",
       expiryDateInput: ""
     }
+  },
+  computed() {
+    // When adding new product, user should see it right away
   },
   methods: {
     toggleAddFridge: async function() {
@@ -95,18 +102,38 @@ export default {
       }
       console.log("hasFridge:", this.hasFridge);
     },
-    // TODO: Thsi function needs work
+    // TODO: This function needs work
     toggleAddProduct: async function() {
+      var fridgeIdInput = document.getElementById("fridgeIdInput").value;
+      console.log("Input value: " + fridgeIdInput);
+
       var productNameInput = document.getElementById("productNameInput").value;
       console.log("Input value: " + productNameInput);
 
       var expiryDateInput = document.getElementById("expiryDateInput").value;
             
-      var betterExpiryDateInput = new Date(expiryDateInput);
-      console.log("Input value: " + betterExpiryDateInput.toISOString());
-    
-      // get the current fridge the user has
-      // add the product to that fridge and show it 
+      var betterExpiryDateInput = new Date(expiryDateInput).toISOString();
+      console.log("Input value: " + betterExpiryDateInput);
+      
+      let response = await postProductData(this.fridgeIdInput, this.productNameInput, this.expiryDateInput);
+      if (response==null) 
+      {
+        return console.log("Response has returned null, so there will be no post.");
+      }
+      this.userFridges = await getUserFridgeData(this.user.userId)
+
+      this.productData.push(response);
+      this.fridgeIdInput = "";
+      this.productNameInput = "";
+      this.expiryDateInput = "";
+    },
+    deleteProduct: async function(productId) {
+      let response = await deleteProductData(productId);
+      this.userFridges = await getUserFridgeData(this.user.userId)
+    if (response==null) 
+    {
+      return console.log("Response is returning null, delete was not possible.");
+    }
     }
   }
 }
@@ -162,6 +189,11 @@ h3.fridgename {
   padding-left: 3%;
   padding-right: 30%;
 }
+h3.fridgeId {
+  font-family: Inter;
+  font-size: 25px;
+  color: #D4F1F4;
+}
 p.productname {
   font-family: Inter;
   font-size: 20px;
@@ -202,6 +234,17 @@ button.toggleAddProduct {
   background-color: #008CBA;
   border-radius: 20px;
   position: left;
+}
+button.delete-product {
+  font-family: Inter;
+  text-decoration-color: #D4F1F4;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin: 0px 6% 0px;
+  cursor: pointer;
+  background-color: #008CBA;
+  border-radius: 10px;
 }
 button.addFridge {
   font-family: Inter;

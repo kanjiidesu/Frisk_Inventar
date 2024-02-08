@@ -57,8 +57,6 @@ methods: {
     this.emailInput = "";
     this.passwordInput = "";
     this.$root.check()
-    //const event = new Event("loggedin")
-    //window.dispatchEvent(event)
     
     this.$router.push('/account');
   },
