@@ -5,5 +5,6 @@ public class Product
     public string ProductName { get; set; }
     public DateTime ExpiryDate { get; set; }
     public int FridgeId { get; set; } // Foreign Key
+    
 
 }

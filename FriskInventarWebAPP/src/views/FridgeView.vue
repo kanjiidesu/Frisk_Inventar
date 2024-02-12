@@ -1,37 +1,38 @@
 <script setup>
 import { postFridgeData ,getFridgeData, getUser, postUserFridgeData, getUserFridgeData, postProductData, deleteProductData, getFridgeCategoryData } from '../../api';
+import NewProducts from '../components/NewProducts.vue';
+
 
 </script>
 <template>
   <div id="app" class="fridge">
     <h1 class ="fridgetitle">Dit Køleskab</h1>
     <div v-for="userFridge in userFridges" :key="userFridge">
-      <div class="fridge-header">
+      <div class="fridge-header" @click="toggleCategory(userFridge)">
         <h3 class = "fridgename">{{ userFridge.fridge.fridgeName }}</h3>
         <h3 class = "fridgeId">ID:</h3>
         <h3 class = "fridgeId">{{ userFridge.fridge.fridgeId }}</h3>
-        <button class="toggleAddProduct" @click="toggleAddProduct">Tilføj Product</button>
       </div>
-      <div class="new-product">
-        <label class="productnamelabel">Køleskab Id</label>
-        <input v-model="fridgeIdInput" type="number" id="fridgeIdInput" placeholder="e.g 1.." required>
-        <label class="productnamelabel">Produkt navn</label>
-        <input v-model="productNameInput" type="text" id="productNameInput" placeholder="e.g Skinke.." required>
-        <label>Vælg Kategori</label>
-        <select v-model="categoryId">
-          <option v-for="category in fridgeCategories" :key="category.categoryId" :value="category.categoryId">{{ category.categoryName }}</option>
-        </select>
-        <br>
-        <label class="expiryDate">Expiry Date</label>
-        <input v-model="expiryDateInput" type="date" id="expiryDateInput" required>
-      </div>
-      <div v-for="product in userFridge.fridge.products" :key="product">
+      <new-products :userId="user.userId" @newProduct="addProduct"></new-products>
+      <!-- <div v-for="product in userFridge.fridge.products" :key="product">
         <p class="productname">
           <span class="product-name">{{ product.productName }}</span>
           <span class="expiry-date">{{ product.expiryDate }}</span>
           <button class="delete-product" @click="deleteProduct(product.productId)">Fjern</button>
         </p>
-      </div>
+      </div> -->
+      <!-- <transition name="fade"> -->
+        <!-- <p>{{fridgeCategories}}</p> -->
+        <div v-if="fridgeCategories.length>0">
+          <div v-for="product in userFridge.fridge.products" :key="product">
+            <p class="productname">
+              <span class="product-name">{{ product.productName }}</span>
+              <span class="expiry-date">{{ product.expiryDate }}</span>
+              <button class="delete-product" @click="deleteProduct(product.productId)">Fjern</button>
+            </p>
+          </div>
+        </div>
+      <!-- </transition> -->
     </div>
     <div v-if="showTextbox">
       <input v-model="fridgeNameInput" class="fridgeName" type="text" id="fridgeNameInput" placeholder="Skriv navn på køleskab..">
@@ -44,6 +45,7 @@ import { postFridgeData ,getFridgeData, getUser, postUserFridgeData, getUserFrid
 </template>
 <script>
 export default {
+  components: { NewProducts },
   async mounted() {
     var fridge = await getFridgeData()
     this.fridgeName = fridge[0].fridgeName
@@ -74,7 +76,8 @@ export default {
       user: undefined,
       fridgeIdInput: "",
       productNameInput: "",
-      expiryDateInput: ""
+      expiryDateInput: "",
+      categoryList: [],
     }
   },
   computed() {
@@ -111,31 +114,7 @@ export default {
       }
       console.log("hasFridge:", this.hasFridge);
     },
-    // TODO: This function needs work
-    toggleAddProduct: async function() {
-      var fridgeIdInput = document.getElementById("fridgeIdInput").value;
-      console.log("Input value: " + fridgeIdInput);
 
-      var productNameInput = document.getElementById("productNameInput").value;
-      console.log("Input value: " + productNameInput);
-
-      var expiryDateInput = document.getElementById("expiryDateInput").value;
-                 
-      var betterExpiryDateInput = new Date(expiryDateInput).toISOString();
-      console.log("Input value: " + betterExpiryDateInput);
-      
-      let response = await postProductData(this.fridgeIdInput, this.productNameInput, this.expiryDateInput, this.categoryId);
-      if (response==null) 
-      {
-        return console.log("Response has returned null, so there will be no post.");
-      }
-      this.userFridges = await getUserFridgeData(this.user.userId)
-
-      this.productData.push(response);
-      this.fridgeIdInput = "";
-      this.productNameInput = "";
-      this.expiryDateInput = "";
-    },
     deleteProduct: async function(productId) {
       let response = await deleteProductData(productId);
       this.userFridges = await getUserFridgeData(this.user.userId)
@@ -143,20 +122,35 @@ export default {
     {
       return console.log("Response is returning null, delete was not possible.");
     }
+  },
+  async addProduct(response) {
+    this.productData.push(response)
+    this.userFridges = await getUserFridgeData(this.user.userId)
+  },
+  async toggleCategory(userFridge) {
+      userFridge.showCategory = !userFridge.showCategory;
     }
   }
 }
 </script>
 
 <style>
+/* Add styles for the transition effect */
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
 .fridge-header{
   display: flex;
   align-items: baseline;
+  cursor: pointer;
 }
 input[type=date] {
   width: 100%;
-  padding: 12px 20px;
-  margin: 1%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
   box-sizing: border-box;
   border: none;
   font-family: Inter;

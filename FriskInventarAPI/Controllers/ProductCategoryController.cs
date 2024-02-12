@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using FriskInventarAPI;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 
 namespace FriskInventarAPI.Controllers
 {
@@ -39,6 +40,38 @@ namespace FriskInventarAPI.Controllers
             }
 
             return productCategory;
+        }
+
+        // GET: api/ProductCategory/
+        [HttpGet("FridgeContent/{fridgeId}")]
+        public async Task<ActionResult<Dictionary<string, List<Product>>>> getProductCategory(int fridgeId) {
+            /*var productCategories = await _context.ProductCategories.Where(productCategory => productCategory.Product.FridgeId == id)
+            .Include(productCategory => productCategory.Product)
+            
+            .Include(productCategory => productCategory.Category).ToListAsync();*/
+            
+            var result = await _context.ProductCategories
+                .Include(pc => pc.Category.ProductCategories)
+                .Include(pc2 => pc2.Product)
+                .Where(pc => pc.Category.FridgeId == fridgeId)
+                .ToListAsync();
+                //.Include<ProductCategory>(pc => pc.Product)
+            Dictionary<string, List<Product>> records = new();
+            foreach (var category in result) {
+                if (!records.ContainsKey(category.Category.CategoryName))
+                {
+                    records.Add(category.Category.CategoryName, new());
+                }
+                foreach (var pc in category.Category.ProductCategories) {
+                    var product = pc.Product;
+                    if (!records[category.Category.CategoryName].Contains(product))
+                    {
+                        records[category.Category.CategoryName].Add(product);
+                    }
+                }
+            }
+
+            return records;
         }
 
         // PUT: api/ProductCategory/5
