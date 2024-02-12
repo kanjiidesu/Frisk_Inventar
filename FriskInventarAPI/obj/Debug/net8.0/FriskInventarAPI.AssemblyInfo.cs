@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FriskInventarAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ae5868a01aa12bd13471f5c5008f7674661afc10")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cebb0fb9b0ced623976bb159141d47210bf96372")]
 [assembly: System.Reflection.AssemblyProductAttribute("FriskInventarAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FriskInventarAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

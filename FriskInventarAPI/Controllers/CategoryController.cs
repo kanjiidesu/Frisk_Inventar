@@ -41,6 +41,21 @@ namespace FriskInventarAPI.Controllers
             return category;
         }
 
+        // GET: api/Category/Fridge/5
+        [HttpGet("Fridge/{fridgeId}")]
+        public async Task<ActionResult<IEnumerable<Category>>> GetFridgeCategory(int fridgeId)
+        {
+            var category = await _context.Categories.Where(Category => Category.FridgeId == fridgeId).ToListAsync();
+
+            if (category == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(category);
+        }
+
+
         // PUT: api/Category/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]

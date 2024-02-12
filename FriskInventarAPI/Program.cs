@@ -1,4 +1,3 @@
-
 namespace FriskInventarAPI;
 using Microsoft.EntityFrameworkCore;
 using Oracle.EntityFrameworkCore;
@@ -25,7 +24,7 @@ class Program
         app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 
         // Configure the HTTP request pipeline.
-        if (app.Environment.IsDevelopment())
+        if (app.Environment.IsDevelopment())  
         {
             app.UseSwagger();
             app.UseSwaggerUI();
@@ -38,6 +37,7 @@ class Program
         app.MapControllers();
 
         // this ip can change day-to-day
+        // this URL is used for testing on mobile
         //app.Urls.Add("https://192.168.1.70:7076");
 
         app.Run();

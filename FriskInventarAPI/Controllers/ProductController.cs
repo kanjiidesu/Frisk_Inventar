@@ -75,9 +75,20 @@ namespace FriskInventarAPI.Controllers
         // POST: api/Product
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Product>> PostProduct(Product product)
+        public async Task<ActionResult<Product>> PostProduct(PostProductDTO productDto)
         {
+            Product product = new Product();
+            product.ExpiryDate = productDto.ExpiryDate;
+            product.FridgeId = productDto.FridgeId;
+            product.ProductName = productDto.ProductName;
             _context.Products.Add(product);
+            await _context.SaveChangesAsync();
+
+            ProductCategory pc = new();
+            pc.ProductId = product.ProductId;
+            pc.CategoryId = productDto.categoryId;
+            _context.ProductCategories.Add(pc);
+
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetProduct", new { id = product.ProductId }, product);

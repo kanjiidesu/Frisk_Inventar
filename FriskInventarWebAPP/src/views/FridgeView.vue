@@ -1,5 +1,5 @@
 <script setup>
-import { postFridgeData ,getFridgeData, getUser, postUserFridgeData, getUserFridgeData, postProductData, deleteProductData } from '../../api';
+import { postFridgeData ,getFridgeData, getUser, postUserFridgeData, getUserFridgeData, postProductData, deleteProductData, getFridgeCategoryData } from '../../api';
 
 </script>
 <template>
@@ -17,6 +17,11 @@ import { postFridgeData ,getFridgeData, getUser, postUserFridgeData, getUserFrid
         <input v-model="fridgeIdInput" type="number" id="fridgeIdInput" placeholder="e.g 1.." required>
         <label class="productnamelabel">Produkt navn</label>
         <input v-model="productNameInput" type="text" id="productNameInput" placeholder="e.g Skinke.." required>
+        <label>Vælg Kategori</label>
+        <select v-model="categoryId">
+          <option v-for="category in fridgeCategories" :key="category.categoryId" :value="category.categoryId">{{ category.categoryName }}</option>
+        </select>
+        <br>
         <label class="expiryDate">Expiry Date</label>
         <input v-model="expiryDateInput" type="date" id="expiryDateInput" required>
       </div>
@@ -41,8 +46,10 @@ import { postFridgeData ,getFridgeData, getUser, postUserFridgeData, getUserFrid
 export default {
   async mounted() {
     var fridge = await getFridgeData()
-    this.fridgeName = fridge.fridgeName
+    this.fridgeName = fridge[0].fridgeName
     console.log(fridge)
+
+    this.fridgeCategories = await getFridgeCategoryData(fridge[0].fridgeId)
 
     this.user = await getUser()
     console.log(this.user);
@@ -62,6 +69,8 @@ export default {
       showTextbox: false,
       hasFridge: true,
       fridgeName: "",
+      fridgeCategories: [],
+      categoryId: "",
       user: undefined,
       fridgeIdInput: "",
       productNameInput: "",
@@ -111,11 +120,11 @@ export default {
       console.log("Input value: " + productNameInput);
 
       var expiryDateInput = document.getElementById("expiryDateInput").value;
-            
+                 
       var betterExpiryDateInput = new Date(expiryDateInput).toISOString();
       console.log("Input value: " + betterExpiryDateInput);
       
-      let response = await postProductData(this.fridgeIdInput, this.productNameInput, this.expiryDateInput);
+      let response = await postProductData(this.fridgeIdInput, this.productNameInput, this.expiryDateInput, this.categoryId);
       if (response==null) 
       {
         return console.log("Response has returned null, so there will be no post.");

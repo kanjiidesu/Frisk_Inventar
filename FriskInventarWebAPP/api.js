@@ -57,7 +57,7 @@ export const postFridgeData = async (FridgeName) => {
     }
 };
 
-export const postProductData = async (FridgeId, ProductName, ExpiryDate) => {
+export const postProductData = async (FridgeId, ProductName, ExpiryDate, CategoryId) => {
     try {
     const response = await axios({
         method: 'post',
@@ -65,7 +65,8 @@ export const postProductData = async (FridgeId, ProductName, ExpiryDate) => {
         data: {
             fridgeId: FridgeId,
             productName: ProductName,
-            expiryDate: ExpiryDate
+            expiryDate: ExpiryDate,
+            categoryId: CategoryId,
         }
     });
     return response.data;
@@ -81,6 +82,21 @@ export const getUserFridgeData = async (userId) => {
         console.log(response)
         if (response.data == "" || response.data == null) {
             console.log(response.data == "", " there is no fridge to see")
+            return null;
+        }
+        return response.data
+    } catch (error) {
+        console.error('Error getting data: ', error);
+        return null;
+    }
+};
+
+export const getFridgeCategoryData = async (fridgeId) => {
+    try {
+        const response = await axios.get(`${apiURL}api/Category/Fridge/${fridgeId}`);
+        console.log(response)
+        if(response.data == "" || response.data == null) {
+            console.log(response.data == "", " there is no categories")
             return null;
         }
         return response.data
