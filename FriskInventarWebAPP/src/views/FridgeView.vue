@@ -14,15 +14,6 @@ import NewProducts from '../components/NewProducts.vue';
         <h3 class = "fridgeId">{{ userFridge.fridge.fridgeId }}</h3>
       </div>
       <new-products :userId="user.userId" @newProduct="addProduct"></new-products>
-      <!-- <div v-for="product in userFridge.fridge.products" :key="product">
-        <p class="productname">
-          <span class="product-name">{{ product.productName }}</span>
-          <span class="expiry-date">{{ product.expiryDate }}</span>
-          <button class="delete-product" @click="deleteProduct(product.productId)">Fjern</button>
-        </p>
-      </div> -->
-      <!-- <transition name="fade"> -->
-        <!-- <p>{{fridgeCategories}}</p> -->
         <div v-if="fridgeCategories.length>0">
           <div v-for="product in userFridge.fridge.products" :key="product">
             <p class="productname">
@@ -32,7 +23,6 @@ import NewProducts from '../components/NewProducts.vue';
             </p>
           </div>
         </div>
-      <!-- </transition> -->
     </div>
     <div v-if="showTextbox">
       <input v-model="fridgeNameInput" class="fridgeName" type="text" id="fridgeNameInput" placeholder="Skriv navn på køleskab..">

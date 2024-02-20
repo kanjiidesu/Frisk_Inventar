@@ -111,7 +111,8 @@ input[type=text]:focus, input[type=password]:focus {
 }
 
 hr {
-  border: 1px solid #07597c;
+  /* border: 1px solid #07597c; */
+  border: 1px solid #0076a8;
   margin-bottom: 25px;
 }
 

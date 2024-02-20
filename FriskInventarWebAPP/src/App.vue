@@ -6,7 +6,7 @@
       <ul>
         <li><RouterLink to="/">Home</RouterLink></li>
         <li v-if="user != null"><RouterLink to="/fridge">Mit Køleskab</RouterLink></li>
-        <li v-if="user != null"><RouterLink to="/shopping_list">Inkøbsliste</RouterLink></li>
+        <li v-if="user != null"><RouterLink to="/notification-manager">Notifikation Manager</RouterLink></li>
         <li v-if="user != null" style="float:right"><RouterLink to="/account">My Account</RouterLink></li>
         <li v-else style="float:right"><RouterLink to="/account-register">My Account</RouterLink></li>
         <li v-if="user != null" style="float:right"><a @click="logout()" to="/account-register">Log ud</a></li>

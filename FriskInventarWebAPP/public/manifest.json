@@ -1,0 +1,22 @@
+{
+    "name": "friskinventarwebapp",
+    "short_name": "friskinventarwebapp",
+    "theme_color": "#008CBA",
+    "background_color": "#07597c",
+    "display": "standalone",
+    "scope": "/",
+    "start_url": "/index.html",
+    "icons": [
+      {
+        "src": "favicon.png",
+        "sizes": "192x192",
+        "type": "image/png"
+      },
+      {
+        "src": "favicon.png",
+        "sizes": "512x512",
+        "type": "image/png"
+      }
+    ],
+    "splash_pages": null
+  }

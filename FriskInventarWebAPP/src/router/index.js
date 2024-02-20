@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import AccountViewRegister from '../views/AccountViewRegister.vue'
 import AccountLoginView from '../views/AccountViewLogin.vue'
 import AccountView from '../views/AccountView.vue'
+import NotificationManager from '../views/NotificationManager.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -34,6 +35,11 @@ const router = createRouter({
       path: '/account',
       name: 'account',
       component: AccountView
+    },
+    {
+      path: '/notification-manager',
+      name: 'notification-manager',
+      component: NotificationManager
     }
   ]
 })
