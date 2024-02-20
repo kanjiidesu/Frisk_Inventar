@@ -16,9 +16,9 @@ public class FriskInventarContext : DbContext
     {
         // connection string to db
          //options.UseOracle("Data Source=localhost:1541/xe;User Id=Fresh_Produce;Password=Fresh_Produce;");
-        //options.UseOracle("Data Source=FriskInventarDatabase:1521/xe;User Id=system;Password=oracle;");
+        options.UseOracle("Data Source=FriskInventarDatabase:1521/xe;User Id=system;Password=oracle;");
         //Til at opdaterer docker container database med migrations
-        options.UseOracle("Data Source=localhost:1531/xe;User Id=system;Password=oracle;");
+        //options.UseOracle("Data Source=localhost:1531/xe;User Id=system;Password=oracle;");
     }
     public FriskInventarContext() 
     {

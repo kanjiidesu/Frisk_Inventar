@@ -12,7 +12,8 @@ class Program
         // https://whatpwacando.today/notifications
 
         //builder.Services.AddDbContext<FriskInventarContext>(o => o.UseOracle("Data Source=localhost:1541/xe;User Id=Fresh_Produce;Password=Fresh_Produce;"));
-        builder.Services.AddDbContext<FriskInventarContext>(o => o.UseOracle("Data Source=localhost:1531/xe;User Id=system;Password=oracle"));
+        //builder.Services.AddDbContext<FriskInventarContext>(o => o.UseOracle("Data Source=localhost:1531/xe;User Id=system;Password=oracle"));
+        builder.Services.AddDbContext<FriskInventarContext>(o => o.UseOracle("Data Source=FriskInventarDatabase:1521/xe;User Id=system;Password=oracle;"));
 
         //builder.Services.ConfigureMsSqlContext(builder.Configuration); 
         builder.Services.AddControllers();
@@ -26,11 +27,11 @@ class Program
         app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 
         // Configure the HTTP request pipeline.
-        if (app.Environment.IsDevelopment())  
-        {
+        //if (app.Environment.IsDevelopment())  
+        //{
             app.UseSwagger();
             app.UseSwaggerUI();
-        }
+        //}
 
         app.UseHttpsRedirection();
 
