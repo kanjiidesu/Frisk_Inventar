@@ -11,7 +11,8 @@ class Program
         // https://localhost:7076/swagger/index.html
         // https://whatpwacando.today/notifications
 
-        builder.Services.AddDbContext<FriskInventarContext>(o => o.UseOracle("Data Source=localhost:1541/xe;User Id=Fresh_Produce;Password=Fresh_Produce;"));
+        //builder.Services.AddDbContext<FriskInventarContext>(o => o.UseOracle("Data Source=localhost:1541/xe;User Id=Fresh_Produce;Password=Fresh_Produce;"));
+        builder.Services.AddDbContext<FriskInventarContext>(o => o.UseOracle("Data Source=localhost:1531/xe;User Id=system;Password=oracle"));
 
         //builder.Services.ConfigureMsSqlContext(builder.Configuration); 
         builder.Services.AddControllers();

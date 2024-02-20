@@ -1,8 +1,12 @@
 // will contain functions, that make requess to the API using axios
 import axios from 'axios';
 
-const apiURL = "https://localhost:7076/";
-// const apiURL = "https://192.168.1.70:7076/";
+//LIVE API
+//const apiURL = "https://api-frisk.hoxer.net/";
+
+//DEBUG API
+const apiURL = "http://localhost:8080/";
+
 var session = null;
 if (localStorage.getItem("session")) {
     session = JSON.parse(localStorage.getItem("session"))

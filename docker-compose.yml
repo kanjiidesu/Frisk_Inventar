@@ -1,8 +1,24 @@
 version: "3.4"
 services:
+  database:
+    image: quay.io/maksymbilenko/oracle-12c
+    ports: 
+      - 1531:1521
+    environment: 
+      - ORACLE_DISABLE_ASYNCH_IO=true
+    hostname: FriskInventarDatabase
   webapp:
     build: FriskInventarWebAPP/.
     hostname: FriskInventarWebAPP
+    ports:
+      - 80:80
+  webapi:
+    build: FriskInventarAPI/.
+    hostname: FriskInventarAPI
+    ports:
+      - 8080:8080
+    depends_on:
+    - database
 networks:
   default: 
     external: true
