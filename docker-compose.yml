@@ -11,7 +11,7 @@ services:
     build: FriskInventarWebAPP/.
     hostname: FriskInventarWebAPP
     ports:
-      - 80:80
+      - 8000:80
   webapi:
     build: FriskInventarAPI/.
     hostname: FriskInventarAPI
