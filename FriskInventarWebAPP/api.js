@@ -1,11 +1,8 @@
 // will contain functions, that make requess to the API using axios
 import axios from 'axios';
 
-//LIVE API
-//const apiURL = "https://api-frisk.hoxer.net/";
-
-//DEBUG API
-const apiURL = "http://localhost:8080/";
+//IP kan skifte, husk at check ipconfig
+const apiURL = "http://192.168.1.70:7076/";
 
 var session = null;
 if (localStorage.getItem("session")) {
