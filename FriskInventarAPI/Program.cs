@@ -11,9 +11,9 @@ class Program
         // https://localhost:7076/swagger/index.html
         // https://whatpwacando.today/notifications
 
-        //builder.Services.AddDbContext<FriskInventarContext>(o => o.UseOracle("Data Source=localhost:1541/xe;User Id=Fresh_Produce;Password=Fresh_Produce;"));
+        builder.Services.AddDbContext<FriskInventarContext>(o => o.UseOracle("Data Source=localhost:1541/xe;User Id=Fresh_Produce;Password=Fresh_Produce;"));
         //builder.Services.AddDbContext<FriskInventarContext>(o => o.UseOracle("Data Source=localhost:1531/xe;User Id=system;Password=oracle"));
-        builder.Services.AddDbContext<FriskInventarContext>(o => o.UseOracle("Data Source=FriskInventarDatabase:1521/xe;User Id=system;Password=oracle;"));
+        //builder.Services.AddDbContext<FriskInventarContext>(o => o.UseOracle("Data Source=FriskInventarDatabase:1521/xe;User Id=system;Password=oracle;"));
 
         //builder.Services.ConfigureMsSqlContext(builder.Configuration); 
         builder.Services.AddControllers();
@@ -41,7 +41,7 @@ class Program
 
         // this ip can change day-to-day
         // this URL is used for testing on mobile
-        //app.Urls.Add("https://192.168.1.70:7076");
+        //app.Urls.Add("http://0.0.0.0:7076");
 
         app.Run();
     }

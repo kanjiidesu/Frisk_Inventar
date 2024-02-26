@@ -2,6 +2,7 @@
 import axios from 'axios';
 
 //IP kan skifte, husk at check ipconfig
+//const apiURL = "http://10.168.1.151:7076/"
 const apiURL = "http://192.168.1.70:7076/";
 
 var session = null;
