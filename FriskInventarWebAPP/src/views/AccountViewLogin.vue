@@ -18,6 +18,10 @@ import { postUserData, loginUser } from '../../api';
     <button class="loginbtn" @click="handleButtonClick">Log ind</button>
   </div>
 
+  <!-- <md-snackbar :md-position="position" :md-duration="isInfinity ? Infinity : duration" :md-active.sync="showSnackbar" md-persistent>
+      <span>Login info was not correct, please try again.</span>
+  </md-snackbar> -->
+
   <div class="container signin">
     <p>Har du ikke en konto? <a @click="navigateToRegister">Registre</a>.</p>
   </div>
@@ -32,7 +36,12 @@ export default {
     userData: [],
     userNameInput: "",
     emailInput: "",
-    passwordInput: ""
+    passwordInput: "",
+    name: 'SnackbarExample',
+    showSnackbar: false,
+    position: 'center',
+    duration: 4000,
+    isInfinity: false
   }
 },
 
@@ -44,13 +53,17 @@ methods: {
       response = await loginUser(this.userNameInput, this.passwordInput);
       if (response==null)
       {
+        // this.showSnackbar = true;
         return console.log("Response is not valid")
       }
       // if user can login, show success and account page 
     } catch (error) {
       // also show error to user, maybe a popup,or a hidden p
+      // this.showSnackbar = true;
       console.error('Error during login: ', error);
     }
+    // this.showSnackbar = true;
+    // print(showSnackbar)
     console.log('Account was successfully logged in.')
     this.userData.push(response);
     this.userNameInput = "";

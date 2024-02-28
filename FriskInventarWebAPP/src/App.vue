@@ -1,5 +1,7 @@
 <!-- https://medium.com/@dgongoragamboa/how-to-add-dark-mode-to-a-vue-project-74de5a6988a6 -->
 <!-- TODO: Lav DarkMode -->
+<!-- https://www.creative-tim.com/vuematerial/components/snackbar -->
+<!-- TODO: Lav SnackBar til Login -->
 <template>
   <div>
     <header>
